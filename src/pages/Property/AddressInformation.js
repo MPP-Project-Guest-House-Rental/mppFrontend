@@ -5,53 +5,31 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function AddressInformation() {
+export default function AddressInformation(props) {
+  debugger;
+  const { values, field1, field2, activeStep, isLastStep, handleBack, handleNext } = props;
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="country"
+            name="country"
+            label="Country"
             fullWidth
-            autoComplete="given-name"
+            autoComplete="country"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
+            id="state"
+            name="state"
+            label="State"
             fullWidth
             autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
             variant="standard"
           />
         </Grid>
@@ -62,15 +40,26 @@ export default function AddressInformation() {
             name="city"
             label="City"
             fullWidth
-            autoComplete="shipping address-level2"
+            autoComplete="city"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
+            id="zipCode"
+            name="zipCode"
+            label="Zip Code"
+            fullWidth
+            autoComplete="zipCode"
+            variant="standard"
+          />
+        </Grid>
+   
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="lat"
+            name="lat"
+            label="Lat"
             fullWidth
             variant="standard"
           />
@@ -78,29 +67,24 @@ export default function AddressInformation() {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
+            id="lon"
+            name="lon"
+            label="Lon"
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="country"
-            name="country"
-            label="Country"
+            id="streetNumber"
+            name="streetNumber"
+            label="Street Number"
             fullWidth
-            autoComplete="shipping country"
+            autoComplete="shipping address-level2"
             variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
           />
         </Grid>
       </Grid>
