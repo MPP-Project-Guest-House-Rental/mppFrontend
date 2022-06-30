@@ -2,12 +2,25 @@ import * as React from "react";
 import HeroImageOne from "../common/assets/img/story-1.jpeg";
 import HeroImageTwo from "../common/assets/img/story-2.jpeg";
 import AllProperty from "./AllProperty";
+import {useEffect, useState} from 'react'
+import { useNavigate, Route } from "react-router-dom";
 
 export default function Home() {
+
+  const navigate = useNavigate();
+  const [firstLetter, setFirstLetter] = useState("");
+
+  useEffect(() => {
+    
+    
+  },[])
+
+  
+
   return (
     <>
  
-      <AllProperty />
+      <AllProperty/>
 
  
       <div class="row story_background">
