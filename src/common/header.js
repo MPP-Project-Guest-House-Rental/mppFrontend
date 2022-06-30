@@ -21,6 +21,7 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
+import {useEffect, useState} from 'react'
 export default function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -75,6 +76,18 @@ export default function Header() {
   const handleClose1 = () => {
     setAnchorEl(null);
   };
+
+  // const navigate2 = useNavigate();
+  const [firstLetter, setFirstLetter] = useState("");
+
+  useEffect(() => {
+    let localValue = JSON.parse(localStorage.getItem('MppApp'))
+    if(!localValue){
+      navigate("/login");
+    }
+    setFirstLetter(localValue.myUserDetailService.username[0].toUpperCase() )
+    
+  },[])
   return (
     <>
       <header>
@@ -105,7 +118,7 @@ export default function Header() {
                     aria-haspopup="true"
                     aria-expanded={open1 ? "true" : undefined}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                    <Avatar sx={{ width: 32, height: 32 }}>{firstLetter}</Avatar>
                   </IconButton>
                 </Tooltip>
               </Box>

@@ -12,18 +12,57 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+import {useEffect, useState} from 'react'
+import axios from "axios";
+import { useNavigate, Route } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function LogIn() {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [logedin, setLogedin] = useState(false);
+  const [roles, setRoles] = useState([]);
+  const [firstLetter, setFirstLetter] = useState("");
+
+  const handleSubmit = async(event) => {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
+    try{
+      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/login',{
+      username: data.get('email'),
+      password: data.get('password')
+    })
+
+    localStorage.setItem('MppApp', JSON.stringify(response.data));
+    const roles = [];
+    for (const element of response.data.myUserDetailService.authorities) {
+      roles.push(element)
+    }
+
+    setRoles(roles)
+    navigate("/");
+    setLoading(false);
+    }catch(error){
+      setLoginError('You have entered invalid username or password!')
+      console.log(error);
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    console.log('start')
+    let localValue = localStorage.getItem('MppApp')
+    if(localValue){
+      navigate("/");
+    }
+    
+  },[])
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,6 +76,7 @@ export default function LogIn() {
             alignItems: 'center',
           }}
         >
+          {loginError.length > 0 ? <Alert severity="error">{loginError}</Alert>: null}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
