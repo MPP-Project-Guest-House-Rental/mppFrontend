@@ -17,7 +17,7 @@ export default function AllProperty() {
     <>
 
 <div className="container  custom-cards">
-<div className="row mb-5">
+<div className="row my-5">
           <div className="col-md-4">
           <div class="home">
                 <img src={HouseOne} alt="House 1" class="home__img"></img>

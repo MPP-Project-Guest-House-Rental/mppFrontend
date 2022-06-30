@@ -13,6 +13,7 @@ import Header from './common/header';
 import Footer from './common/footer';
 import SignUp from './pages/UserManagment/SignUp';
 import PropertyImageList from './pages/PropertyImageList';
+import PropertyStepper from './pages/Property/PropertyStepper';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ root.render(
       <Route path="login" element={<LogIn />} />
       <Route path="signUp" element={<SignUp />} />
       <Route path='PropertyImageList' element={<PropertyImageList />} />
+      <Route path='PropertyStepper' element={<PropertyStepper />} />
     </Routes>
     <Footer />
   </BrowserRouter>

@@ -6,7 +6,11 @@ import AllProperty from "./AllProperty";
 export default function Home() {
   return (
     <>
-        <div class="row story_background">
+ 
+      <AllProperty />
+
+ 
+      <div class="row story_background">
           <div class="col-md-6 equal">
             <div class="story__pictures">
               <img
@@ -36,9 +40,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      <AllProperty />
-
- 
     </>
   );
 }
