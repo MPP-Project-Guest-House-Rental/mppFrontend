@@ -60,6 +60,8 @@ export default function LogIn() {
     let localValue = localStorage.getItem('MppApp')
     if(localValue){
       navigate("/");
+    }else{
+      navigate("/login");
     }
     
   },[])
