@@ -16,37 +16,50 @@ import AddressInformation from './AddressInformation';
 import PropertyInformation from './PropertyInformation';
 import ImageInformation from './ImageInformation';
 import Summary from './Summary'
+import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 
 
-const steps = ['Property Information', 'Address Information', 'Image', 'Summary'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <PropertyInformation />;
-    case 1:
-      return <AddressInformation />;
-    case 2:
-      return <ImageInformation />;
-    case 3:
-      return <Summary />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 const theme = createTheme();
 
-export default function PropertyStepper() {
+export default function PropertyStepper(props) {
+  debugger;
+  const steps = ['Property Information', 'Address Information', 'Image', 'Summary'];
+  const { field1, field2, field3, field4, field5, field6, } = props;
   const [activeStep, setActiveStep] = React.useState(0);
+  const [formValues, setFormValues] = useState({
+    field1, field2, field3, field4, field5, field6
+  });
+ 
 
-  const handleNext = () => {
+  const handleNext = (newValues) => {
+    debugger;
+    setFormValues({ ...formValues, ...newValues });
     setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  function getStepContent(step) {
+    const isLastStep = (activeStep === steps.length - 1);
+    switch (step) {
+      case 0:
+        return <PropertyInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+      case 1:
+        return <AddressInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+      case 2:
+        return <ImageInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+        case 3:
+          return <Summary {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+       
+        default:
+        throw new Error('Mis-step!');
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,11 +83,7 @@ export default function PropertyStepper() {
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
+   
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -91,7 +100,7 @@ export default function PropertyStepper() {
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Host Property' : 'Next'}
                   </Button>
                 </Box>
               </React.Fragment>

@@ -13,7 +13,9 @@ body {
   font-family: "Nunito", sans-serif;
   color: #cac8c5;
   font-weight: 300;
-  line-height: 1.6; }
+  line-height: 1.6; 
+  overflow-x: hidden !important;
+}
 
 
 .heading-1, .heading-2, .heading-3, .heading-4 {
@@ -356,4 +358,15 @@ body {
 .css-1999axt-MuiAvatar-root {
 
   background-color: #dc3545 !important;
+}
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #212529;
+  text-decoration: none;
+  background-color: #fff;
+  border: none !important;
+  border-bottom: 1px solid rgba(0,0,0,.125) !important;
+  
 }

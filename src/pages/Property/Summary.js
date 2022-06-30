@@ -39,51 +39,34 @@ const payments = [
 
 export default function Summary() {
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Order summary
-      </Typography>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    </React.Fragment>
+<>
+<div className='row'>
+  <div className='col-md-12'>
+  <ul class="list-group list-group-light">
+    <h4>Property Information</h4>
+  <li class="list-group-item">title</li>
+  <li class="list-group-item">Type</li>
+  <li class="list-group-item">Bed Room Number</li>
+  <li class="list-group-item">Bed Number</li>
+  <li class="list-group-item">Bath Room Number</li>
+  <li class="list-group-item">Property Description</li>
+  <li class="list-group-item">Space</li>
+  <li class="list-group-item">Capacity</li>
+</ul>
+  </div>
+  <div className='col-md-12'>
+  <ul class="list-group list-group-light">
+  <h4>Adress Information</h4>
+  <li class="list-group-item">Country</li>
+  <li class="list-group-item">State</li>
+  <li class="list-group-item">City</li>
+  <li class="list-group-item">Street Number</li>
+  <li class="list-group-item">Zip Code</li>
+  <li class="list-group-item">Lon</li>
+  <li class="list-group-item">Lat</li>
+</ul>
+  </div>
+</div>
+</>
   );
 }
