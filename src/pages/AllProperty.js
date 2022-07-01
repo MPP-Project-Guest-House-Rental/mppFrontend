@@ -5,12 +5,39 @@ import HouseThree from "../common/assets/img/house-3.jpeg";
 import HouseFour from "../common/assets/img/house-4.jpeg";
 import HouseFiv from "../common/assets/img/house-5.jpeg";
 import HouseSix from "../common/assets/img/house-6.jpeg";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from 'react'
+import { useNavigate, Route } from "react-router-dom";
+import axios from "axios";
 export default function AllProperty() {
     const navigate = useNavigate ();
-    const handelSingelProperty = (e) => {
-        e.preventDefault();
-        navigate('/PropertyImageList');
+    const [loading, setLoading] = useState(false);
+    const [loginError, setLoginError] = useState("");
+
+    // useEffect(async () => {   
+    //     getProperties()
+    // },[])
+
+    async function getProperties(){
+        try{
+            let localValue = await localStorage.getItem('MppApp')
+            const token = JSON.parse(localValue).jwt
+            console.log(token)
+            const config = {
+                headers: { 
+                  Authorization: `Bearer ${token}`
+                }
+              };
+            const response = await axios.get(process.env.REACT_APP_BASE_URL+'/property', config)
+            console.log(response)
+      
+          }catch(error){
+            setLoginError('You have entered invalid username or password!')
+            console.log(error);
+            setLoading(false);
+          }  
+    }
+
+    async function handelSingelProperty(){
 
     }
   return (

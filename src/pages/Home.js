@@ -9,12 +9,6 @@ export default function Home() {
 
   const navigate = useNavigate();
   const [firstLetter, setFirstLetter] = useState("");
-
-  useEffect(() => {
-    
-    
-  },[])
-
   
 
   return (

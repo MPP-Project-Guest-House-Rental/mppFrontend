@@ -28,6 +28,7 @@ export default function Header() {
   const open1 = Boolean(anchorEl);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [role, setRole] = useState([])
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -77,15 +78,22 @@ export default function Header() {
     setAnchorEl(null);
   };
 
-  // const navigate2 = useNavigate();
   const [firstLetter, setFirstLetter] = useState("");
+  const [logedin, setLogedin] = useState(false);
 
   useEffect(() => {
     let localValue = JSON.parse(localStorage.getItem('MppApp'))
     if(!localValue){
-      navigate("/login");
+      navigate("/");
     }else{
       setFirstLetter(localValue.myUserDetailService.username[0].toUpperCase() )
+      let roles = []
+      for(const element of localValue.myUserDetailService.authorities){
+        roles.push(element.authority)
+      }
+      console.log(roles)
+      setRole(roles)
+      setLogedin(true)
     }
     
     
@@ -159,32 +167,36 @@ export default function Header() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleLogIn}>
+                {logedin === true ? null : <MenuItem onClick={handleLogIn}>
                   <ListItemIcon>
                     <LoginIcon fontSize="small" />
                   </ListItemIcon>
                   Log in
-                </MenuItem>
-                <MenuItem onClick={handleSignUp}>
+                </MenuItem>}
+                {logedin === true ? null : <MenuItem onClick={handleSignUp}>
                   <Avatar />
                   Sign up
-                </MenuItem>
-                <MenuItem onClick={handleHost}>
+                </MenuItem>}
+                {role.includes("HOST") ? <MenuItem onClick={handleHost}>
                   <Avatar />
                   Host your Home
-                </MenuItem>
+                </MenuItem>: null}
+                {role.includes("GUEST") ? <MenuItem onClick={handleHost}>
+                  <Avatar />
+                  Reservation
+                </MenuItem>: null}
                 <MenuItem>
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
-                  Settings
+                  Profile
                 </MenuItem>
-                <MenuItem>
+                {logedin === false ? null : <MenuItem>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
                   Logout
-                </MenuItem>
+                </MenuItem>}
               </Menu>
             </React.Fragment>
           </div>
