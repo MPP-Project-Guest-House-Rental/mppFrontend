@@ -84,8 +84,10 @@ export default function Header() {
     let localValue = JSON.parse(localStorage.getItem('MppApp'))
     if(!localValue){
       navigate("/login");
+    }else{
+      setFirstLetter(localValue.myUserDetailService.username[0].toUpperCase() )
     }
-    setFirstLetter(localValue.myUserDetailService.username[0].toUpperCase() )
+    
     
   },[])
   return (

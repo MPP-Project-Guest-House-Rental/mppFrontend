@@ -14,9 +14,14 @@ import Footer from './common/footer';
 import SignUp from './pages/UserManagment/SignUp';
 import PropertyImageList from './pages/PropertyImageList';
 import PropertyStepper from './pages/Property/PropertyStepper';
+import { Provider } from 'react-redux'
+import configureStore from "./redux/configureStore";
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const store = configureStore();
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
+      <React.StrictMode>
    <BrowserRouter>
    <Header />
     <Routes>
@@ -28,8 +33,9 @@ root.render(
     </Routes>
     <Footer />
   </BrowserRouter>
- 
   </React.StrictMode>
+  </Provider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

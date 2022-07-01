@@ -6,11 +6,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import AddressInformation from './AddressInformation';
+import { useDispatch, useSelector } from 'react-redux';
+import addPropertyInformation from '../../redux/actions/addPropertyInformationAction';
 
-export default function PropertyInformation(props) {
+const PropertyInformation = forwardRef((props, ref) => { 
   debugger;
-  const { values, field1, field2, activeStep, isLastStep, handleBack, handleNext } = props;
-  const [registrationData, setRegistrationData] = useState({
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state);
+  let prevInfo = counter.propertyInformation[counter.propertyInformation.length - 1];
+  const [propertyData, setPropertyData] = useState({
     title: '',
     type: '',
     bath_room_number: '',
@@ -20,7 +24,6 @@ export default function PropertyInformation(props) {
     property_description: '',
     user_id: '',
     space: '',
-    description: '',
     capacity: '',
   });
 
@@ -28,11 +31,11 @@ export default function PropertyInformation(props) {
     debugger;
     const { name, value } = event.target;
    
-    setRegistrationData((prevState) => ({
+    setPropertyData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  
+    dispatch(addPropertyInformation(propertyData));
   };
 
   return (
@@ -46,6 +49,7 @@ export default function PropertyInformation(props) {
             fullWidth
             autoComplete="cc-name"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.title : null}
             onChange={handleChange}
           />
         </Grid>
@@ -57,28 +61,32 @@ export default function PropertyInformation(props) {
             fullWidth
             autoComplete="cc-number"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.type : null}
             onChange={handleChange}
           />
         </Grid>
+
         <Grid item xs={12} md={6}>
           <TextField
-        
-          name="description"
-            label="Property Description"
+            
+            name="price_per_night"
+            label="Price Per Night"
             fullWidth
-            autoComplete="cc-exp"
+            autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.price_per_night : null}
             onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             
-            name="bathRoomNo"
+            name="bath_room_number"
             label="Bath Room Number"
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.bath_room_number : null}
             onChange={handleChange}
           />
         </Grid>
@@ -90,6 +98,7 @@ export default function PropertyInformation(props) {
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.space : null}
             onChange={handleChange}
           />
         </Grid>
@@ -101,43 +110,51 @@ export default function PropertyInformation(props) {
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.capacity : null}
             onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             
-            name="bedRoomNo"
+            name="bed_room_number"
             label="Bed Room Number"
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.bed_room_number : null}
             onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             
-            name="bedNumber"
+            name="bed_number"
             label="Bed Number"
             fullWidth
             autoComplete="cc-csc"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.bed_number : null}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+
+        <Grid item xs={12}>
           <TextField
-            
-            name="pricePerNight"
-            label="Price Per Night"
+        
+          name="property_description"
+            label="Property Description"
             fullWidth
-            autoComplete="cc-csc"
+            autoComplete="cc-exp"
             variant="standard"
+            defaultValue={prevInfo ? prevInfo.property_description : null}
             onChange={handleChange}
           />
         </Grid>
+
       </Grid>
     </React.Fragment>
   );
-}
+});
+
+export default  PropertyInformation;

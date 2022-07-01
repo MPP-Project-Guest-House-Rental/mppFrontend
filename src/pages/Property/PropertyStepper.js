@@ -1,42 +1,91 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressInformation from './AddressInformation';
-import PropertyInformation from './PropertyInformation';
-import ImageInformation from './ImageInformation';
-import Summary from './Summary'
-import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-
-
-
-
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AddressInformation from "./AddressInformation";
+import PropertyInformation from "./PropertyInformation";
+import ImageInformation from "./ImageInformation";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const theme = createTheme();
 
 export default function PropertyStepper(props) {
   debugger;
-  const steps = ['Property Information', 'Address Information', 'Image', 'Summary'];
-  const { field1, field2, field3, field4, field5, field6, } = props;
+  var UserToken = JSON.parse(localStorage.getItem('MppApp'));
+  const steps = ["Property Information", "Address Information", "Image"];
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formValues, setFormValues] = useState({
-    field1, field2, field3, field4, field5, field6
-  });
- 
+
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state);
+  let propertyInfo =
+    counter.propertyInformation[counter.propertyInformation.length - 1];
+  let addressInfo =
+    counter.addressInformation[counter.addressInformation.length - 1];
+  let ImageLIst = counter.propertyImage[counter.propertyImage.length - 1];
+
+  const handleSubmit = () => {
+    debugger;
+    let formData = new FormData();
+
+    if (propertyInfo !== undefined) {
+      formData.append("user_id", 57);
+      formData.append("capacity", propertyInfo.capacity);
+      formData.append("title", propertyInfo.title);
+      formData.append("price_per_night", propertyInfo.price_per_night);
+      formData.append("space", propertyInfo.space);
+      formData.append("type", propertyInfo.type);
+      formData.append("bath_room_number", propertyInfo.bath_room_number);
+      formData.append("bed_number", propertyInfo.bed_number);
+      formData.append(
+        "property_description",
+        propertyInfo.property_description
+      );
+    }
+
+    if (addressInfo !== undefined) {
+      formData.append("city", addressInfo.city);
+      formData.append("country", addressInfo.country);
+      formData.append("lat", addressInfo.lat);
+      formData.append("lon", addressInfo.lon);
+      formData.append("state", addressInfo.state);
+      formData.append("street_number", addressInfo.street_number);
+      formData.append("zip_code", addressInfo.zip_code);
+    }
+
+    if (addressInfo !== undefined) {
+      for(var i = 0; i < ImageLIst.length; i++){
+          formData.append('images', ImageLIst[i]);
+      }
+    }
+
+    const config = {
+      Authorization: 'Bearer ' + UserToken?.accessToken,
+      headers: { "content-type": "multipart/form-data" },
+    };
+    let url = process.env.REACT_APP_BASE_URL + "/property";
+
+    axios
+      .post(url, formData, config)
+      .then((response) => {
+        debugger;
+        console.log(response);
+      })
+      .catch((error) => {
+        debugger;
+        console.log(error);
+      });
+  };
 
   const handleNext = (newValues) => {
     debugger;
-    setFormValues({ ...formValues, ...newValues });
     setActiveStep(activeStep + 1);
   };
 
@@ -45,19 +94,15 @@ export default function PropertyStepper(props) {
   };
 
   function getStepContent(step) {
-    const isLastStep = (activeStep === steps.length - 1);
     switch (step) {
       case 0:
-        return <PropertyInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+        return <PropertyInformation />;
       case 1:
-        return <AddressInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
+        return <AddressInformation />;
       case 2:
-        return <ImageInformation {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
-        case 3:
-          return <Summary {...formValues} activeStep={activeStep} isLastStep={isLastStep} handleBack={handleBack} handleNext={handleNext}/>;
-       
-        default:
-        throw new Error('Mis-step!');
+        return <ImageInformation />;
+      default:
+        throw new Error("Mis-step!");
     }
   }
 
@@ -66,7 +111,10 @@ export default function PropertyStepper(props) {
       <CssBaseline />
 
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Host your home
           </Typography>
@@ -83,25 +131,33 @@ export default function PropertyStepper(props) {
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
-   
               </React.Fragment>
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                       Back
                     </Button>
                   )}
-
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    {activeStep === steps.length - 1 ? 'Host Property' : 'Next'}
-                  </Button>
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      variant="contained"
+                      onClick={handleSubmit}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Save Property
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Next
+                    </Button>
+                  )}
                 </Box>
               </React.Fragment>
             )}
