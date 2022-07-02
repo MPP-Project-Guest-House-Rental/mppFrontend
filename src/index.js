@@ -17,7 +17,6 @@ import PropertyStepper from './pages/Property/PropertyStepper';
 import Admin from './pages/Admin/Admin';
 import { Provider } from 'react-redux'
 import configureStore from "./redux/configureStore";
-import RatingProperty from './pages/Rating/RatingProperty';
 import HostProperties from './pages/HostProperty/HostProperties';
 import MYProperty from './pages/Guest/MYProperty';
 
@@ -35,7 +34,6 @@ root.render(
       <Route path='PropertyImageList' element={<PropertyImageList />} />
       <Route path='admin' element={<Admin />} />
       <Route path='PropertyStepper' element={<PropertyStepper />} />
-      <Route path='RatingProperty' element={<RatingProperty />} />
       <Route path='hostProperties' element={<HostProperties />} />
       <Route path='MYProperty' element={<MYProperty />} />
     </Routes>
