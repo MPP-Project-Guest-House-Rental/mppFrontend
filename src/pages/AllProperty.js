@@ -12,185 +12,73 @@ export default function AllProperty() {
     const navigate = useNavigate ();
     const [loading, setLoading] = useState(false);
     const [loginError, setLoginError] = useState("");
+    const [data, setData] = useState([])
 
-    // useEffect(async () => {   
-    //     getProperties()
-    // },[])
 
-    async function getProperties(){
-        try{
-            let localValue = await localStorage.getItem('MppApp')
-            const token = JSON.parse(localValue).jwt
-            console.log(token)
-            const config = {
-                headers: { 
-                  Authorization: `Bearer ${token}`
-                }
-              };
-            const response = await axios.get(process.env.REACT_APP_BASE_URL+'/property', config)
-            console.log(response)
-      
-          }catch(error){
-            setLoginError('You have entered invalid username or password!')
-            console.log(error);
-            setLoading(false);
-          }  
-    }
+    // async function handelSingelProperty(){
+    //     console.log("hello")
+    //     navigate('/PropertyImageList', { state: { id: 7, color: 'green' } });
+    // }
 
-    async function handelSingelProperty(){
+    useEffect(() => {
+        async function getProperties(){
+            try{
+                const response = await axios.get(process.env.REACT_APP_BASE_URL+'/property')
+                console.log(response.data)
+                setData(response.data)
+              }catch(error){
+                setLoginError('You have entered invalid username or password!')
+                console.log(error);
+                setLoading(false);
+              }  
+        }
+        getProperties()
+      },[])
 
-    }
+
   return (
     <>
-
 <div className="container  custom-cards">
 <div className="row my-5">
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseOne} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Beautiful Familiy House</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
-                </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn" onClick={handelSingelProperty}>Explore More</button>
-            </div>
-          </div>
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseTwo} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Modern Glass Villa</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
-                </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn" onClick={handelSingelProperty}>Explore More</button>
-            </div>
-          </div>
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseThree} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Cozy Country House</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
-                </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn" onClick={handelSingelProperty}>Explore More</button>
-            </div>
-          </div>
-        </div>
+{data.length > 0 ? data.map((row, index, arr) => {
+    return (
+        
+            <div className="col-md-4">
+                <div class="home">
+                    <img src={row.cover_image} alt="House 1" class="home__img"></img>
+                    <h5 class="home__name">{row.title}</h5>
+                    <div class="home__location">
+                
+                        <p>{row.address.country}</p>
+                    </div>
+                    <div class="home__rooms">
+                
+                        <p>{row.homeProperty.bedNumber} rooms</p>
+                    </div>
+                    <div class="home__area">
+                    
+                        <p>{row.address.city}</p>
+                    </div>
+                    <div class="home__price">
 
-        <div className="row">
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseFour} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Large Rustical Villa</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
+                        <p>${row.pricePerNight}</p>
+                    </div>
+                    <button class="btn home__btn" onClick={() => {
+                        navigate('/PropertyImageList',  { state: { id: row.id }})
+                    }}>Explore More</button>
                 </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn" onClick={handelSingelProperty}>Explore More</button>
             </div>
-          </div>
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseFiv} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Modern Familiy Apartment</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
-                </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn">Contact Host</button>
-            </div>
-          </div>
-          <div className="col-md-4">
-          <div class="home">
-                <img src={HouseSix} alt="House 1" class="home__img"></img>
-                <h5 class="home__name">Cozy Country House</h5>
-                <div class="home__location">
-            
-                    <p>USA</p>
-                </div>
-                <div class="home__rooms">
-           
-                    <p>5 rooms</p>
-                </div>
-                <div class="home__area">
-             
-                    <p>325 m<sup>2</sup></p>
-                </div>
-                <div class="home__price">
-       
-                    <p>$1,200,000</p>
-                </div>
-                <button class="btn home__btn">Contact Host</button>
-            </div>
-          </div>
-        </div>
+        
+    );
+})   
+:<div>Loading</div>
+}
+</div> 
+
 </div>
 <div class="text-center u-margin-huge">
-                    <a href="#" class="btn-custome btn--green">Discover all Homes</a>
-                </div>
+    <a href="#" class="btn-custome btn--green">Discover all Homes</a>
+</div>
 
  
     </>

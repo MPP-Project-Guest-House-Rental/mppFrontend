@@ -12,18 +12,48 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import {useEffect, useState} from 'react'
+import axios from "axios";
+import { useNavigate, Route } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [logedin, setLogedin] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+      country: data.get('country'),
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName')
     });
+
+    try{
+      const response = await axios.post(process.env.REACT_APP_BASE_URL+'/AppUser',{
+        email: data.get('email'),
+        password: data.get('password'),
+        firstName: data.get('firstName'),
+        lastName: data.get('lastName'),
+        "address": {
+          country: data.get('country')
+        }
+    })
+
+    navigate("/login");
+    setLoading(false);
+    }catch(error){
+      setLoginError('You have entered invalid username or password!')
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,6 +116,16 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="country"
+                  label="Country"
+                  name="country"
+                  autoComplete="family-name"
                 />
               </Grid>
 

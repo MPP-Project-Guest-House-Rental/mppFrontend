@@ -1,6 +1,6 @@
 import * as types from '../actions/actionTypes';
 export default function propertyImage(state = [], action) {
-  debugger;
+  // debugger;
   switch (action.type) {
     case types.IMAGE:
       return [...state, { ...action.files }];

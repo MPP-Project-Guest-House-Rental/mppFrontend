@@ -14,6 +14,7 @@ import Footer from './common/footer';
 import SignUp from './pages/UserManagment/SignUp';
 import PropertyImageList from './pages/PropertyImageList';
 import PropertyStepper from './pages/Property/PropertyStepper';
+import Admin from './pages/Admin/Admin';
 import { Provider } from 'react-redux'
 import configureStore from "./redux/configureStore";
 
@@ -29,7 +30,8 @@ root.render(
       <Route path="login" element={<LogIn />} />
       <Route path="signUp" element={<SignUp />} />
       <Route path='PropertyImageList' element={<PropertyImageList />} />
-      <Route path='PropertyStepper' element={<PropertyStepper />} />
+      <Route path='admin' element={<Admin />} />
+      <Route path='admin' element={<PropertyStepper />} />
     </Routes>
     <Footer />
   </BrowserRouter>

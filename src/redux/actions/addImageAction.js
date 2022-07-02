@@ -1,5 +1,5 @@
 import * as types  from './actionTypes';
 export default function addImage(files) {
-  debugger;
+  // debugger;
   return { type: types.IMAGE, files };
 }

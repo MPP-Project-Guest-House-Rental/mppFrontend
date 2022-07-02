@@ -40,10 +40,6 @@ export default function LogIn() {
     })
 
     localStorage.setItem('MppApp', JSON.stringify(response.data));
-    const roles = [];
-    for (const element of response.data.myUserDetailService.authorities) {
-      roles.push(element)
-    }
 
     setRoles(roles)
     navigate("/");
@@ -57,12 +53,12 @@ export default function LogIn() {
 
   useEffect(() => {
     console.log('start')
-    let localValue = localStorage.getItem('MppApp')
-    if(localValue){
-      navigate("/");
-    }else{
-      navigate("/login");
-    }
+    // let localValue = localStorage.getItem('MppApp')
+    // if(localValue){
+    //   navigate("/");
+    // }else{
+    //   navigate("/login");
+    // }
     
   },[])
 
