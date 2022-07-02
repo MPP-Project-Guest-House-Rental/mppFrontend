@@ -59,7 +59,7 @@ export default function PropertyImageList() {
 
 
     
-    <Checkout />
+    <Checkout id={state.id}/>
 
 
 
