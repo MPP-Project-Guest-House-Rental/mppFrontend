@@ -5,35 +5,28 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function PaymentForm() {
+export default function PaymentForm(props) {
+  debugger;
+  const { reservationData } = props;
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Payment method
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardNumber"
-            label="Card number"
-            fullWidth
-            autoComplete="cc-number"
-            variant="standard"
-          />
-        </Grid>
+<>
+<ul class="list-group list-group-light">
+  <li class="list-group-item ">
+  <strong>Reference Number   :</strong> <span class="text-start">{reservationData.refNumber}</span>
 
-      </Grid>
-    </React.Fragment>
+  </li>
+  <li class="list-group-item ">
+  <strong>Start Date   :</strong>  <span class="text-start">{reservationData.startDate}</span>
+
+  </li>
+  <li class="list-group-item ">
+  <strong>End Date  :</strong>  <span class="text-left">{reservationData.endDate}</span>
+
+  </li>
+  <li class="list-group-item ">
+   <strong>Calculated Price   :</strong> <span class="text-left">{reservationData.calculatedPrice}</span>
+  </li>
+
+</ul></>
   );
 }

@@ -9,15 +9,41 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import Checkout from './Checkout';
+import Moment from 'moment';
 
 export default function ReservationDate() {
-  const [value, setValue] = React.useState(new Date('2014-08-18T21:11:54'));
+  debugger;
+  let [startDate, setStartDate] = useState(new Date());
+  let [endDate, setEndDate] = useState(new Date());
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+
+  const handleStartDate = (newValue) => {
+    debugger;
+    setStartDate(newValue);
+
+    newValue = Moment().format(newValue.getFullYear() + 
+    "-" + ("0" + (newValue.getMonth() + 1)).slice(-2) + "-" + 
+    ("0" + newValue.getDate()).slice(-2));
+
+    localStorage.setItem('StartDate', newValue);
+    
+   
   };
+  const handleEndDate = (newValue) => {
+    setEndDate(newValue);
+    newValue = Moment().format(newValue.getFullYear() + 
+    "-" + ("0" + (newValue.getMonth() + 1)).slice(-2) + "-" + 
+    ("0" + newValue.getDate()).slice(-2));
+
+    localStorage.setItem('endDate', newValue);
+  };
+
+
   return (
-    <React.Fragment>
+    <>
+        <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Reservation Date
       </Typography>
@@ -27,9 +53,9 @@ export default function ReservationDate() {
       <Stack spacing={3}>
         <DesktopDatePicker
           label="Check In"
-          inputFormat="MM/dd/yyyy"
-          value={value}
-          onChange={handleChange}
+          inputFormat="yyyy/MM/dd"
+          value={startDate}
+          onChange={handleStartDate}
           renderInput={(params) => <TextField {...params} />}
         />
       </Stack>
@@ -40,9 +66,9 @@ export default function ReservationDate() {
       <Stack spacing={3}>
         <DesktopDatePicker
           label="Check Out"
-          inputFormat="MM/dd/yyyy"
-          value={value}
-          onChange={handleChange}
+          inputFormat="yyyy/MM/dd"
+          value={endDate}
+          onChange={handleEndDate}
           renderInput={(params) => <TextField {...params} />}
         />
       </Stack>
@@ -50,5 +76,7 @@ export default function ReservationDate() {
     </Grid>
       </Grid>
     </React.Fragment>
+    </>
+
   );
 }

@@ -14,11 +14,14 @@ import PropertyInformation from "./PropertyInformation";
 import ImageInformation from "./ImageInformation";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Alert from '@mui/material/Alert';
+import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 
 const theme = createTheme();
 
 export default function PropertyStepper(props) {
   debugger;
+  const [IsSuccess, setIsSuccess] = useState(false);
   var UserToken = JSON.parse(localStorage.getItem('MppApp'));
   const steps = ["Property Information", "Address Information", "Image"];
   const [activeStep, setActiveStep] = React.useState(0);
@@ -36,7 +39,7 @@ export default function PropertyStepper(props) {
     let formData = new FormData();
 
     if (propertyInfo !== undefined) {
-      formData.append("user_id", 57);
+      formData.append("user_id", UserToken?.myUserDetailService.id);
       formData.append("capacity", propertyInfo.capacity);
       formData.append("title", propertyInfo.title);
       formData.append("price_per_night", propertyInfo.price_per_night);
@@ -44,10 +47,9 @@ export default function PropertyStepper(props) {
       formData.append("type", propertyInfo.type);
       formData.append("bath_room_number", propertyInfo.bath_room_number);
       formData.append("bed_number", propertyInfo.bed_number);
-      formData.append(
-        "property_description",
-        propertyInfo.property_description
-      );
+      formData.append("bed_room_number", propertyInfo.bed_room_number);
+      formData.append("description", "test");
+      formData.append("property_description",propertyInfo.property_description );
     }
 
     if (addressInfo !== undefined) {
@@ -60,14 +62,15 @@ export default function PropertyStepper(props) {
       formData.append("zip_code", addressInfo.zip_code);
     }
 
-    if (addressInfo !== undefined) {
-      for(var i = 0; i < ImageLIst.length; i++){
-          formData.append('images', ImageLIst[i]);
+    if (ImageLIst !== undefined) {
+      var count = Object.keys(ImageLIst).length;
+      for(var i = 0; i < count; i++){
+          formData.append('images', ImageLIst[i].Attachement);
       }
     }
 
     const config = {
-      Authorization: 'Bearer ' + UserToken?.accessToken,
+      Authorization: 'Bearer ' + UserToken?.jwt,
       headers: { "content-type": "multipart/form-data" },
     };
     let url = process.env.REACT_APP_BASE_URL + "/property";
@@ -76,6 +79,7 @@ export default function PropertyStepper(props) {
       .post(url, formData, config)
       .then((response) => {
         debugger;
+        setIsSuccess(true);
         console.log(response);
       })
       .catch((error) => {
@@ -109,8 +113,9 @@ export default function PropertyStepper(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
+    
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
@@ -118,6 +123,8 @@ export default function PropertyStepper(props) {
           <Typography component="h1" variant="h4" align="center">
             Host your home
           </Typography>
+         
+         
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
@@ -125,11 +132,12 @@ export default function PropertyStepper(props) {
               </Step>
             ))}
           </Stepper>
+       
           <React.Fragment>
-            {activeStep === steps.length ? (
+            {IsSuccess === true ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+               <Alert severity="success">Your Property successfully submited! Thank you!</Alert>
                 </Typography>
               </React.Fragment>
             ) : (

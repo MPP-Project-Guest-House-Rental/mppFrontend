@@ -8,6 +8,10 @@ import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import AddressInformation from './AddressInformation';
 import { useDispatch, useSelector } from 'react-redux';
 import addPropertyInformation from '../../redux/actions/addPropertyInformationAction';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+import MenuItem from '@mui/material/MenuItem';
 
 const PropertyInformation = forwardRef((props, ref) => { 
   debugger;
@@ -54,16 +58,21 @@ const PropertyInformation = forwardRef((props, ref) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField
-            required
-            name="type"
-            label="Property Type"
-            fullWidth
-            autoComplete="cc-number"
-            variant="standard"
-            defaultValue={prevInfo ? prevInfo.type : null}
-            onChange={handleChange}
-          />
+        <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Property Type
+        </InputLabel>
+        <NativeSelect
+          defaultValue={"HOME"}
+          name="type"
+          onChange={handleChange}
+        >
+          <option value={"HOME"}>HOME</option>
+          <option value={"APARTMENT"}>APARTMENT</option>
+          
+        </NativeSelect>
+      </FormControl>
+
         </Grid>
 
         <Grid item xs={12} md={6}>
@@ -91,16 +100,22 @@ const PropertyInformation = forwardRef((props, ref) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField
-            
-            name="space"
-            label="Space"
-            fullWidth
-            autoComplete="cc-csc"
-            variant="standard"
-            defaultValue={prevInfo ? prevInfo.space : null}
-            onChange={handleChange}
-          />
+        <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Property Space
+        </InputLabel>
+        <NativeSelect
+          defaultValue={prevInfo ? prevInfo.space : null}
+          name="space"
+          onChange={handleChange}
+        >
+           <option disabled value="">Select Property</option>
+          <option value={"SHARED_ROOM"}>SHARED_ROOM</option>
+          <option value={"ENTIRE_PLACE"}>ENTIRE_PLACE</option>
+          <option value={"PRIVATE_ROOM"}>PRIVATE_ROOM</option>
+
+        </NativeSelect>
+      </FormControl>
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
