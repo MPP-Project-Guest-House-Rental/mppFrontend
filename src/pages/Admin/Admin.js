@@ -72,8 +72,10 @@ export default function Admin() {
     try{
       const response = await axios.post(process.env.REACT_APP_BASE_URL+'/AppUser/addAmount',{
         "id": id,
-        "balance": amount,
-        "account_number": accountNumber
+        "account": {
+          "balance": amount,
+          "accountNumber": parseFloat(accountNumber)
+        }
       })
       console.log(response.data)
       setData(response.data)
@@ -90,7 +92,7 @@ export default function Admin() {
     async function getUsers(){
         try{
             const response = await axios.get(process.env.REACT_APP_BASE_URL+'/AppUser')
-            console.log(response.data)
+            console.log("User----->",response.data)
             setData(response.data)
           }catch(error){
             setLoginError('You have entered invalid username or password!')
