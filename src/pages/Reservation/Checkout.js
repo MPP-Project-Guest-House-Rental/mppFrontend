@@ -24,8 +24,9 @@ const steps = ["Reservation Date", "Confirm and Pay"];
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Checkout(props) {
   debugger;
+  const { id } = props;
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -53,7 +54,7 @@ export default function Checkout() {
     var endDate = localStorage.getItem("endDate");
     let url =
       process.env.REACT_APP_BASE_URL +
-      `/reservation/${UserToken.myUserDetailService.id}/21`;
+      `/reservation/${UserToken.myUserDetailService.id}/${id}`;
 
     axios({
       headers: {

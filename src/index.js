@@ -17,7 +17,7 @@ import PropertyStepper from './pages/Property/PropertyStepper';
 import Admin from './pages/Admin/Admin';
 import { Provider } from 'react-redux'
 import configureStore from "./redux/configureStore";
-import RatingProperty from './pages/Rating/RatingProperty';
+import MYProperty from './pages/Guest/MYProperty';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore();
@@ -33,7 +33,7 @@ root.render(
       <Route path='PropertyImageList' element={<PropertyImageList />} />
       <Route path='admin' element={<Admin />} />
       <Route path='PropertyStepper' element={<PropertyStepper />} />
-      <Route path='RatingProperty' element={<RatingProperty />} />
+      <Route path='MYProperty' element={<MYProperty />} />
     </Routes>
     <Footer />
   </BrowserRouter>
