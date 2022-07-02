@@ -14,12 +14,6 @@ export default function AllProperty() {
     const [loginError, setLoginError] = useState("");
     const [data, setData] = useState([])
 
-
-    // async function handelSingelProperty(){
-    //     console.log("hello")
-    //     navigate('/PropertyImageList', { state: { id: 7, color: 'green' } });
-    // }
-
     useEffect(() => {
         async function getProperties(){
             try{
