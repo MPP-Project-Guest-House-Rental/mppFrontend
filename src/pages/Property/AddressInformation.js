@@ -14,13 +14,13 @@ import addAddressInformation from '../../redux/actions/addAddressInformationActi
   const counter = useSelector((state) => state);
   let prevInfo = counter.addressInformation[counter.addressInformation.length - 1];
   const [addressData, setAddressData] = useState({
-    country: '',
-    city: '',
-    state: '',
-    street_number: '',
-    zip_code: '',
-    lat: '',
-    lon: ''
+    country: prevInfo ? prevInfo.country : null,
+    city: prevInfo ? prevInfo.city : null,
+    state: prevInfo ? prevInfo.state : null,
+    street_number: prevInfo ? prevInfo.street_number : null,
+    zip_code: prevInfo ? prevInfo.zip_code : null,
+    lat: prevInfo ? prevInfo.lat : null,
+    lon: prevInfo ? prevInfo.lon : null,
   });
   const handleChange = (event) => {
     ;

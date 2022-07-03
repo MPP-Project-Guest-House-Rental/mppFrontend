@@ -91,6 +91,10 @@ export default function Header() {
     navigate('/hostProperties')
   }
 
+  const handleMyList = () => {
+    navigate('/admin')
+  }
+
   const [firstLetter, setFirstLetter] = useState("");
   const [logedin, setLogedin] = useState(false);
 
@@ -201,7 +205,7 @@ export default function Header() {
                   
                   My Reservation
                 </MenuItem>: null}
-                {role.includes("ADMIN") ? <MenuItem>
+                {role.includes("ADMIN") ? <MenuItem onClick={handleMyList}>
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>

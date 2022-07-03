@@ -65,14 +65,17 @@ export default function MYProperty() {
   const [data, setData] = useState([]);
   const [propertyId, setPropertyId] = useState();
   const [reviewText, setreviewText] = useState("");
-
+  const [refNumber, setRefNumber] = useState("");
+  const navigate = useNavigate();
   const handleClickOpen = (id) => {
+    debugger;
     setOpen(true);
     setPropertyId(id)
 
   };
-  const handleClickOpenTwo = (id) => {
+  const handleClickOpenTwo = (refNumber) => {
     setOpenTwo(true);
+    setRefNumber(refNumber);
   };
   const handleClose = () => {
     setOpen(false);
@@ -82,18 +85,19 @@ export default function MYProperty() {
     setOpenTwo(false);
   };
   const handelCancel = () =>{
+    debugger;
     axios({
       headers: {
         "Access-Control-Allow-Credentials": true,
       },
       method: "post",
-      url: process.env.REACT_APP_BASE_URL + `/reservation/cancel/${propertyId}/${UserToken.myUserDetailService.id}/review`,
-      data: { "review": reviewText},
+      url: process.env.REACT_APP_BASE_URL + `/reservation/cancel/${refNumber}/${UserToken.myUserDetailService.id}`,
     })
       .then((response) => {
         debugger;
         setIsSuccess(true);
         setOpenTwo(false);
+        window.location.reload();
       })
       .catch((error) => {
         debugger;
@@ -103,7 +107,7 @@ export default function MYProperty() {
       });
   }
   const handlesubmit = () => {
-    ;
+    debugger;
     axios({
       headers: {
         "Access-Control-Allow-Credentials": true,
@@ -113,11 +117,9 @@ export default function MYProperty() {
       data: { "review": reviewText},
     })
       .then((response) => {
-        ;
         setIsSuccess(true);
       })
       .catch((error) => {
-        ;
         console.log("error" + error.message);
       });
   };
@@ -177,7 +179,7 @@ export default function MYProperty() {
                       Review Property
                     </button> */}
                     <Button variant="outlined" onClick={() => handleClickOpen(row.property.id,)}>Review</Button>
-                    <Button variant="outlined" onClick={() => handleClickOpenTwo(row.property.id,)}>Cancel</Button>
+                    <Button variant="outlined" onClick={() => handleClickOpenTwo(row.refNumber,)}>Cancel</Button>
                   </div>
                 </div>
               );

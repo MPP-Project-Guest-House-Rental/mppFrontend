@@ -18,6 +18,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import axios from "axios";
+import Header from "../../common/header";
 
 const columns = [
     { id: 'first name', label: 'First Name', minWidth: 170 },
@@ -114,55 +115,58 @@ export default function Admin() {
   },[])
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data.map((row) => {
-                    return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                        <TableCell align='left'>
-                            {row.firstName}
-                        </TableCell>
-                        <TableCell align='left'>
-                            {row.lastName}
-                        </TableCell>
-                        <TableCell align='right'>
-                            {row.roles.length > 0 ? row.roles[0].roleType : 0}
-                        </TableCell>
-                        <TableCell align='right'>
-                            {row.userName}
-                        </TableCell>
-                        <TableCell align='right'>
-                            {row.account.accountNumber}
-                        </TableCell>
-                        <TableCell align='right'>
-                          <TextField id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {setAmount(e.target.value)}} />
-                        </TableCell>
-                        <TableCell align='right'>
-                          <Button variant="contained" size="small" onClick={() => {handleAdd(row.id, row.account.accountNumber)}}>
-                              Add
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+        <>
+          <Header/>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                          <TableCell align='left'>
+                              {row.firstName}
+                          </TableCell>
+                          <TableCell align='left'>
+                              {row.lastName}
+                          </TableCell>
+                          <TableCell align='right'>
+                              {row.roles.length > 0 ? row.roles[0].roleType : 0}
+                          </TableCell>
+                          <TableCell align='right'>
+                              {row.userName}
+                          </TableCell>
+                          <TableCell align='right'>
+                              {row.account.accountNumber}
+                          </TableCell>
+                          <TableCell align='right'>
+                            <TextField id="outlined-basic" label="Amount" variant="outlined" onChange={(e) => {setAmount(e.target.value)}} />
+                          </TableCell>
+                          <TableCell align='right'>
+                            <Button variant="contained" size="small" onClick={() => {handleAdd(row.id, row.account.accountNumber)}}>
+                                Add
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </>
       );
 }

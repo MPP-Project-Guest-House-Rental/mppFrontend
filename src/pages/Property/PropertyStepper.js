@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+import Header from "../../common/header";
 
 const theme = createTheme();
 
@@ -39,9 +40,10 @@ export default function PropertyStepper(props) {
   const handleSubmit = () => {
     ;
     let formData = new FormData();
+    
 
     if (propertyInfo !== undefined) {
-      formData.append("user_id", UserToken?.myUserDetailService.id);
+      formData.append("user_id", propertyInfo.user_id);
       formData.append("capacity", propertyInfo.capacity);
       formData.append("title", propertyInfo.title);
       formData.append("price_per_night", propertyInfo.price_per_night);
@@ -80,12 +82,15 @@ export default function PropertyStepper(props) {
     axios
       .post(url, formData, config)
       .then((response) => {
-        ;
+        debugger;
         setIsSuccess(true);
         console.log(response);
+        setTimeout(function(){
+          window.location.href = '/';
+       }, 3000);
       })
       .catch((error) => {
-        ;
+        debugger;
         console.log(error);
         setIsError(true);
       });
@@ -116,6 +121,7 @@ export default function PropertyStepper(props) {
 
   return (
     <ThemeProvider theme={theme}>
+      <Header/>
       <CssBaseline />
     
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>

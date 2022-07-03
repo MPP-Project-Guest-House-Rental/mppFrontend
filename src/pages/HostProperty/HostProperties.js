@@ -2,6 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from 'react'
 import { useNavigate, Route } from "react-router-dom";
 import axios from "axios";
+import Header from "../../common/header";
 export default function HostProperties() {
     const navigate = useNavigate ();
     const [loading, setLoading] = useState(false);
@@ -30,11 +31,12 @@ export default function HostProperties() {
 
   return (
     <>
+      <Header/>
 <div className="container  custom-cards">
 <div className="row my-5">
 {data.length > 0 ? data.map((row, index, arr) => {
     return (
-        
+      
             <div className="col-md-4">
                 <div class="home">
                     <img src={row.cover_image} alt="House 1" class="home__img"></img>
@@ -51,7 +53,7 @@ export default function HostProperties() {
                     
                         <p>{row.address.city}</p>
                     </div>
-                    <div class="home__price">
+                    <div class="home__price mb-5">
 
                         <p>${row.pricePerNight}</p>
                     </div>
@@ -64,9 +66,6 @@ export default function HostProperties() {
 }
 </div> 
 
-</div>
-<div class="text-center u-margin-huge">
-    <a href="#" class="btn-custome btn--green">Discover all Homes</a>
 </div>
 
  

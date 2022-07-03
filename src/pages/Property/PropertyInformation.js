@@ -17,18 +17,19 @@ const PropertyInformation = forwardRef((props, ref) => {
   ;
   const dispatch = useDispatch();
   const counter = useSelector((state) => state);
+  var UserToken = JSON.parse(localStorage.getItem('MppApp'));
   let prevInfo = counter.propertyInformation[counter.propertyInformation.length - 1];
   const [propertyData, setPropertyData] = useState({
-    title: '',
-    type: '',
-    bath_room_number: '',
-    price_per_night: '',
-    bed_number: '',
-    bed_room_number: '',
-    property_description: '',
-    user_id: '',
-    space: '',
-    capacity: '',
+    title: prevInfo ? prevInfo.title : null,
+    type: prevInfo ? prevInfo.type : "HOME",
+    bath_room_number: prevInfo ? prevInfo.bath_room_number : null,
+    price_per_night: prevInfo ? prevInfo.price_per_night : null,
+    bed_number: prevInfo ? prevInfo.bed_number : null,
+    bed_room_number: prevInfo ? prevInfo.bed_room_number : null,
+    property_description: prevInfo ? prevInfo.property_description : null,
+    user_id: UserToken?.myUserDetailService.id,
+    space: prevInfo ? prevInfo.space : "SHARED_ROOM",
+    capacity: prevInfo ? prevInfo.capacity : null,
   });
 
   const handleChange = (event) => {
@@ -63,13 +64,14 @@ const PropertyInformation = forwardRef((props, ref) => {
           Property Type
         </InputLabel>
         <NativeSelect
-          defaultValue={"HOME"}
+         required
           name="type"
           onChange={handleChange}
         >
+           <option disabled value="">Select Property</option>
           <option value={"HOME"}>HOME</option>
-          <option value={"APARTMENT"}>APARTMENT</option>
-          
+          <option value={"APARTMENT"}>APPARTMENT</option>
+
         </NativeSelect>
       </FormControl>
 
@@ -105,7 +107,6 @@ const PropertyInformation = forwardRef((props, ref) => {
           Property Space
         </InputLabel>
         <NativeSelect
-          defaultValue={prevInfo ? prevInfo.space : null}
           name="space"
           onChange={handleChange}
         >
