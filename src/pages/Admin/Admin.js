@@ -61,6 +61,7 @@ const columns = [
   
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -90,6 +91,14 @@ export default function Admin() {
   useEffect(() => {
     
     async function getUsers(){
+      let localValue = JSON.parse(localStorage.getItem('MppApp'))
+
+      console.log(localValue.myUserDetailService.authorities[0].authority)
+      if(localValue && localValue.myUserDetailService.authorities[0].authority === 'ADMIN'){
+        navigate("/admin");
+      }else{
+        navigate("/");
+      }
         try{
             const response = await axios.get(process.env.REACT_APP_BASE_URL+'/AppUser')
             console.log("User----->",response.data)

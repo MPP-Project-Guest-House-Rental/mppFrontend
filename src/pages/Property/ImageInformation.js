@@ -10,7 +10,7 @@ export default function ImageInformation() {
   let [Files, setFiles] = useState([]);
 
   let handleChange = (e) => {
-    debugger;
+    ;
   
     for(let i = 0; i < e.target.files.length; i++){
       Files.push({

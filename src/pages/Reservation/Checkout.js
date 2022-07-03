@@ -25,7 +25,7 @@ const steps = ["Reservation Date", "Confirm and Pay"];
 const theme = createTheme();
 
 export default function Checkout(props) {
-  debugger;
+  ;
   const { id } = props;
   function getStepContent(step) {
     switch (step) {
@@ -47,7 +47,7 @@ export default function Checkout(props) {
   let [reservationData, setReservationData] = useState([]);
 
   const handleNext = () => {
-    debugger;
+    ;
     setIsSuccess(false);
     setIsError(false);
     var startDate = localStorage.getItem("StartDate");
@@ -69,13 +69,13 @@ export default function Checkout(props) {
       },
     })
       .then((response) => {
-        debugger;
+        ;
         console.log(response);
         setReservationData(response.data);
         setActiveStep(activeStep + 1);
       })
       .catch((error) => {
-        debugger;
+        ;
         console.log(error);
         setErrorMessage(
           error.response?.data.message
@@ -107,12 +107,12 @@ export default function Checkout(props) {
       data: reservationData,
     })
       .then((response) => {
-        debugger;
+        ;
         console.log(response);
         setIsSuccess(true);
       })
       .catch((error) => {
-        debugger;
+        ;
         console.log(error);
         setErrorMessage(
           error.response?.data.message

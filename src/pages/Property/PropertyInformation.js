@@ -14,7 +14,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import MenuItem from '@mui/material/MenuItem';
 
 const PropertyInformation = forwardRef((props, ref) => { 
-  debugger;
+  ;
   const dispatch = useDispatch();
   const counter = useSelector((state) => state);
   let prevInfo = counter.propertyInformation[counter.propertyInformation.length - 1];
@@ -32,7 +32,7 @@ const PropertyInformation = forwardRef((props, ref) => {
   });
 
   const handleChange = (event) => {
-    debugger;
+    ;
     const { name, value } = event.target;
    
     setPropertyData((prevState) => ({

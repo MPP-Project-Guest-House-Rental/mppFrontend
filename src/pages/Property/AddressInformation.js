@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import addAddressInformation from '../../redux/actions/addAddressInformationAction';
 
  const AddressInformation = forwardRef((props, ref) => { 
-  debugger;
+  ;
   const dispatch = useDispatch();
   const counter = useSelector((state) => state);
   let prevInfo = counter.addressInformation[counter.addressInformation.length - 1];
@@ -23,7 +23,7 @@ import addAddressInformation from '../../redux/actions/addAddressInformationActi
     lon: ''
   });
   const handleChange = (event) => {
-    debugger;
+    ;
     const { name, value } = event.target;
    
     setAddressData((prevState) => ({
