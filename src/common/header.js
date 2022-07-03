@@ -78,6 +78,19 @@ export default function Header() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () =>{
+    localStorage.removeItem("MppApp")
+    navigate("/login");
+  }
+
+  const handleMyReservation = () => {
+    navigate('/MYProperty')
+  }
+
+  const handleMyHost = () => {
+    navigate('/hostProperties')
+  }
+
   const [firstLetter, setFirstLetter] = useState("");
   const [logedin, setLogedin] = useState(false);
 
@@ -118,7 +131,6 @@ export default function Header() {
                 }}
               >
                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
                 <Tooltip title="Account settings">
                   <IconButton
                     onClick={handleClick}
@@ -178,20 +190,25 @@ export default function Header() {
                   Sign up
                 </MenuItem>}
                 {role.includes("HOST") ? <MenuItem onClick={handleHost}>
-                  <Avatar />
+                  
                   Host your Home
                 </MenuItem>: null}
-                {role.includes("GUEST") ? <MenuItem onClick={handleHost}>
-                  <Avatar />
-                  Reservation
+                {role.includes("HOST") ? <MenuItem onClick={handleMyHost}>
+                  
+                  My Hosts
                 </MenuItem>: null}
-                <MenuItem>
+                {role.includes("GUEST") ? <MenuItem onClick={handleMyReservation}>
+                  
+                  My Reservation
+                </MenuItem>: null}
+                {role.includes("ADMIN") ? <MenuItem>
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
-                  Profile
-                </MenuItem>
-                {logedin === false ? null : <MenuItem>
+                  UserList
+                </MenuItem>:null}
+                {logedin === false ? null : 
+                <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

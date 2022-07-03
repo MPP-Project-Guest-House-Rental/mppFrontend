@@ -16,6 +16,7 @@ import Alert from '@mui/material/Alert';
 import {useEffect, useState} from 'react'
 import axios from "axios";
 import { useNavigate, Route } from "react-router-dom";
+import Header from '../../common/header';
 
 const theme = createTheme();
 
@@ -53,18 +54,20 @@ export default function LogIn() {
 
   useEffect(() => {
     console.log('start')
-    // let localValue = localStorage.getItem('MppApp')
-    // if(localValue){
-    //   navigate("/");
-    // }else{
-    //   navigate("/login");
-    // }
+    let localValue = localStorage.getItem('MppApp')
+    if(localValue){
+      navigate("/");
+    }else{
+      navigate("/login");
+    }
     
   },[])
 
   return (
     <ThemeProvider theme={theme}>
+      <Header/>
       <Container component="main" maxWidth="xs" className='reg-background'>
+        
         <CssBaseline />
         <Box
           sx={{

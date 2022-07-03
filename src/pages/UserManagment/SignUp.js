@@ -15,6 +15,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useEffect, useState} from 'react'
 import axios from "axios";
 import { useNavigate, Route } from "react-router-dom";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const theme = createTheme();
 
@@ -38,13 +42,18 @@ export default function SignUp() {
 
     try{
       const response = await axios.post(process.env.REACT_APP_BASE_URL+'/AppUser',{
-        email: data.get('email'),
+        userName: data.get('email'),
         password: data.get('password'),
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
-        "address": {
+        address: {
           country: data.get('country')
-        }
+        },
+        roles: [
+          {
+            roleType: role
+          }
+        ]
     })
 
     navigate("/login");
@@ -54,6 +63,24 @@ export default function SignUp() {
       console.log(error);
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    console.log('start')
+    let localValue = localStorage.getItem('MppApp')
+    if(localValue){
+      navigate("/");
+    }else{
+      navigate("/signup");
+    }
+    
+  },[])
+
+  const [role, setRole] = React.useState('');
+
+  const handleRoleChaneg = (event) => {
+    console.log(event.target.value)
+    setRole(event.target.value);
   };
 
   return (
@@ -127,6 +154,21 @@ export default function SignUp() {
                   name="country"
                   autoComplete="family-name"
                 />
+              </Grid>
+              <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={role}
+                  label="Role"
+                  onChange={handleRoleChaneg}
+                >
+                  <MenuItem value={"GUEST"}>GUEST</MenuItem>
+                  <MenuItem value={"HOST"}>HOST</MenuItem>
+                </Select>
+              </FormControl>
               </Grid>
 
             </Grid>

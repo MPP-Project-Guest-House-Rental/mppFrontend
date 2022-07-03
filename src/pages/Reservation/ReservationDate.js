@@ -14,13 +14,13 @@ import Checkout from './Checkout';
 import Moment from 'moment';
 
 export default function ReservationDate() {
-  debugger;
+  ;
   let [startDate, setStartDate] = useState(new Date());
   let [endDate, setEndDate] = useState(new Date());
 
 
   const handleStartDate = (newValue) => {
-    debugger;
+    ;
     setStartDate(newValue);
 
     newValue = Moment().format(newValue.getFullYear() + 

@@ -16,6 +16,8 @@ import { useNavigate, Route } from "react-router-dom";
 import Alert from '@mui/material/Alert';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import DialogContentText from '@mui/material/DialogContentText';
+import Header from "../../common/header";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -101,7 +103,7 @@ export default function MYProperty() {
       });
   }
   const handlesubmit = () => {
-    debugger;
+    ;
     axios({
       headers: {
         "Access-Control-Allow-Credentials": true,
@@ -111,11 +113,11 @@ export default function MYProperty() {
       data: { "review": reviewText},
     })
       .then((response) => {
-        debugger;
+        ;
         setIsSuccess(true);
       })
       .catch((error) => {
-        debugger;
+        ;
         console.log("error" + error.message);
       });
   };
@@ -131,17 +133,18 @@ export default function MYProperty() {
         `/reservation/reservationByUserId/${UserToken.myUserDetailService.id}`,
     })
       .then((response) => {
-        debugger;
+        ;
         console.log(response.data.property);
         setData(response.data);
       })
       .catch((error) => {
-        debugger;
+        ;
         console.log("error" + error.message);
       });
   }, []);
   return (
     <>
+    <Header/>
       <div className="container  custom-cards">
         <div className="row my-5">
           {data?.length > 0 ? (

@@ -20,7 +20,7 @@ import { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 const theme = createTheme();
 
 export default function PropertyStepper(props) {
-  debugger;
+  ;
   const [IsSuccess, setIsSuccess] = useState(false);
   const [IsError, setIsError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
@@ -37,7 +37,7 @@ export default function PropertyStepper(props) {
   let ImageLIst = counter.propertyImage[counter.propertyImage.length - 1];
 
   const handleSubmit = () => {
-    debugger;
+    ;
     let formData = new FormData();
 
     if (propertyInfo !== undefined) {
@@ -80,19 +80,19 @@ export default function PropertyStepper(props) {
     axios
       .post(url, formData, config)
       .then((response) => {
-        debugger;
+        ;
         setIsSuccess(true);
         console.log(response);
       })
       .catch((error) => {
-        debugger;
+        ;
         console.log(error);
         setIsError(true);
       });
   };
 
   const handleNext = (newValues) => {
-    debugger;
+    ;
     setActiveStep(activeStep + 1);
   };
 

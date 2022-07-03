@@ -1,10 +1,5 @@
 import * as React from "react";
-import HouseOne from "../common/assets/img/house-1.jpeg";
-import HouseTwo from "../common/assets/img/house-2.jpeg";
-import HouseThree from "../common/assets/img/house-3.jpeg";
-import HouseFour from "../common/assets/img/house-4.jpeg";
-import HouseFiv from "../common/assets/img/house-5.jpeg";
-import HouseSix from "../common/assets/img/house-6.jpeg";
+import Header from '../common/header';
 import {useEffect, useState} from 'react'
 import { useNavigate, Route } from "react-router-dom";
 import axios from "axios";
@@ -32,6 +27,7 @@ export default function AllProperty() {
 
   return (
     <>
+    <Header/>
 <div className="container  custom-cards">
 <div className="row my-5">
 {data.length > 0 ? data.map((row, index, arr) => {
