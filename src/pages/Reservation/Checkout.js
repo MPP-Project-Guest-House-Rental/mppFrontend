@@ -149,7 +149,7 @@ export default function Checkout(props) {
             </React.Fragment>
           )}
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            Reserev Property
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (

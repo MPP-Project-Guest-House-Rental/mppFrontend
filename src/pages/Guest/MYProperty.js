@@ -1,11 +1,5 @@
 import * as React from "react";
-import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import StarIcon from "@mui/icons-material/Star";
-import HouseOne from "../../common/assets/img/house-1.jpeg";
-import HouseTwo from "../../common/assets/img/house-2.jpeg";
-import HouseThree from "../../common/assets/img/house-3.jpeg";
-import GradeIcon from "@mui/icons-material/Grade";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -20,7 +14,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Route } from "react-router-dom";
 import Alert from '@mui/material/Alert';
-
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import DialogContentText from '@mui/material/DialogContentText';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -62,6 +57,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function MYProperty() {
   const [open, setOpen] = React.useState(false);
+  const [openTwo, setOpenTwo] = React.useState(false);
   const [IsSuccess, setIsSuccess] = useState(false);
   let UserToken = JSON.parse(localStorage.getItem("MppApp"));
   const [data, setData] = useState([]);
@@ -73,10 +69,37 @@ export default function MYProperty() {
     setPropertyId(id)
 
   };
+  const handleClickOpenTwo = (id) => {
+    setOpenTwo(true);
+  };
   const handleClose = () => {
     setOpen(false);
+    setIsSuccess(false);
   };
-
+  const handleCloseTwo = () => {
+    setOpenTwo(false);
+  };
+  const handelCancel = () =>{
+    axios({
+      headers: {
+        "Access-Control-Allow-Credentials": true,
+      },
+      method: "post",
+      url: process.env.REACT_APP_BASE_URL + `/reservation/cancel/${propertyId}/${UserToken.myUserDetailService.id}/review`,
+      data: { "review": reviewText},
+    })
+      .then((response) => {
+        debugger;
+        setIsSuccess(true);
+        setOpenTwo(false);
+      })
+      .catch((error) => {
+        debugger;
+        setIsSuccess(true);
+        setOpenTwo(false);
+        console.log("error" + error.message);
+      });
+  }
   const handlesubmit = () => {
     debugger;
     axios({
@@ -144,12 +167,14 @@ export default function MYProperty() {
                     <div class="home__price">
                       <p>${row.property.pricePerNight}</p>
                     </div>
-                    <button
+                    {/* <button
                       class="btn home__btn"
                       onClick={() => handleClickOpen(row.property.id,)}
                     >
                       Review Property
-                    </button>
+                    </button> */}
+                    <Button variant="outlined" onClick={() => handleClickOpen(row.property.id,)}>Review</Button>
+                    <Button variant="outlined" onClick={() => handleClickOpenTwo(row.property.id,)}>Cancel</Button>
                   </div>
                 </div>
               );
@@ -196,6 +221,29 @@ export default function MYProperty() {
               Review
             </Button>
           </DialogActions>
+        </BootstrapDialog>
+      </div>
+
+      <div>
+        <BootstrapDialog
+          onClose={handleCloseTwo}
+          aria-labelledby="customized-dialog-title"
+          open={openTwo}
+        >
+          
+    <DialogContent>
+          <DialogContentText>
+           Are you sure you want to cancel this reservation ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions className="pb-5">
+          <Button autoFocus onClick={handleCloseTwo}>
+            No
+          </Button>
+          <Button onClick={handelCancel} autoFocus>
+            yes
+          </Button>
+        </DialogActions>
         </BootstrapDialog>
       </div>
     </>

@@ -28,6 +28,7 @@ export default function PropertyImageList() {
   useEffect(() => {
     async function getProperty(){
         try{
+          debugger;
             setId(state.id)
             const response = await axios.get(process.env.REACT_APP_BASE_URL+'/property/'+state.id)
             console.log(response.data.imagess)

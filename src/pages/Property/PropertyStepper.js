@@ -22,6 +22,8 @@ const theme = createTheme();
 export default function PropertyStepper(props) {
   debugger;
   const [IsSuccess, setIsSuccess] = useState(false);
+  const [IsError, setIsError] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
   var UserToken = JSON.parse(localStorage.getItem('MppApp'));
   const steps = ["Property Information", "Address Information", "Image"];
   const [activeStep, setActiveStep] = React.useState(0);
@@ -85,6 +87,7 @@ export default function PropertyStepper(props) {
       .catch((error) => {
         debugger;
         console.log(error);
+        setIsError(true);
       });
   };
 
@@ -95,6 +98,7 @@ export default function PropertyStepper(props) {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+    setIsError(false);
   };
 
   function getStepContent(step) {
@@ -134,6 +138,7 @@ export default function PropertyStepper(props) {
           </Stepper>
        
           <React.Fragment>
+            {IsError &&  <Alert severity="error">Something went wrong! Please try Again.</Alert>}
             {IsSuccess === true ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
